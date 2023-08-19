@@ -26,7 +26,7 @@
     </div>
 
     <div class="centering">
-        <div id="result" class="result">aaa</div>
+        <div id="result" class="result"></div>
     </div>
 
     <div class="centering">
@@ -64,9 +64,13 @@
         recognition.continuous = true;
 
         let finalTranscript = "";
-        let interimTranscript = "";
+        let ignoreResults = false;
         recognition.onresult = (event) => {
-            interimTranscript = "";
+            if (ignoreResults) {
+                return;
+            }
+
+            let interimTranscript = "";
             for (let i = event.resultIndex; i < event.results.length; i++) {
                 let transcript = event.results[i][0].transcript;
                 if (event.results[i].isFinal) {
@@ -102,7 +106,6 @@
         }
         recognition.onspeechstart = () => {
             onspeechstartSignal.style.backgroundColor = "forestgreen";
-            onsoundstartSignal.style.backgroundColor = "forestgreen";
         }
         recognition.onspeechend = () => {
             onspeechstartSignal.style.backgroundColor = "crimson";
@@ -111,11 +114,13 @@
         startBtn.onclick = () => {
             startBtn.setAttribute("disabled", true);
             recognition.start();
+            ignoreResults = false;
             stopBtn.removeAttribute("disabled");
         }
         stopBtn.onclick = () => {
             stopBtn.setAttribute("disabled", true);
             recognition.stop();
+            ignoreResults = true;
 
             if (result.innerText != "") {
                 let newElement = document.createElement("div");
@@ -126,7 +131,6 @@
             }
 
             finalTranscript = "";
-            interimTranscript = "";
             result.innerHTML = "";
 
             startBtn.removeAttribute("disabled");
