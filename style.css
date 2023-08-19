@@ -1,0 +1,37 @@
+body {
+    background-color: #222222;
+    color: #eeeeee;
+    font-family: 'BIZ UDGothic', sans-serif;
+}
+
+button:not(:disabled) {
+    cursor: pointer;
+}
+
+.centering {
+    display: flex;
+    justify-content: space-around;
+    margin: 0.5em;
+}
+
+.result, .resultFinishedChild {
+    color: #222222;
+    border: 1px solid #888888;
+    width: 90vw;
+}
+.result {
+    background-color: #eeeeee;
+    min-height: 5em;
+}
+.resultFinishedChild {
+    background-color: #bbbbbb;
+    min-height: 1em;
+    margin-bottom: 0.5em;
+}
+
+.finalTranscript {
+    color: #222222;
+}
+.interimTranscript {
+    color: #888888;
+}

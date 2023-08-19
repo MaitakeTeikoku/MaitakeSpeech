@@ -5,56 +5,84 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
     <title>Maitake Speech</title>
 </head>
 
 <body>
-    <dev id="info">info</dev>
-    <button id="startBtn">start</button>
-    <button id="stopBtn">stop</button>
-    <div id="result">result</div>
+    <dev id="info" class="info">ブラウザが音声合成に対応しているか確認中...</dev>
+
+    <p></p>
+    <div class="centering">
+        <button id="startBtn" class="startBtn" type="submit" disabled>スタート</button>
+        <button id="stopBtn" clss="stopBtn" type="button" disabled>ストップ</button>
+    </div>
+
+    <div class="centering">
+        <div id="result" class="result"></div>
+    </div>
+
+    <div class="centering">
+        <div id="resultFinished" class="resultFinished"></div>
+    </div>
+
+
+
+    <script>
+        const info = document.getElementById("info");
+        const startBtn = document.getElementById("startBtn");
+        const stopBtn = document.getElementById("stopBtn");
+        const result = document.getElementById("result");
+        const resultFinished = document.getElementById("resultFinished");
+
+        SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+
+        if ("SpeechRecognition" in window) {
+            info.innerText = "ブラウザは音声合成に対応しています。";
+            startBtn.removeAttribute("disabled");
+        } else {
+            info.innerText = "ブラウザは音声合成に対応していません。";
+        }
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = "ja-JP";
+        recognition.interimResults = true;
+        recognition.continuous = true;
+
+        let finalTranscript = "";
+
+        recognition.onresult = (event) => {
+            let interimTranscript = "";
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                let transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    finalTranscript += transcript;
+                } else {
+                    interimTranscript = transcript;
+                }
+            }
+            result.innerHTML = "<span class='finalTranscript'>" + finalTranscript + "</span><span class='interimTranscript'>" + interimTranscript + "</span>";
+        }
+
+        startBtn.onclick = () => {
+            recognition.start();
+            stopBtn.removeAttribute("disabled");
+            startBtn.setAttribute("disabled", true);
+        }
+        stopBtn.onclick = () => {
+            recognition.stop();
+            startBtn.removeAttribute("disabled");
+
+            let newElement = document.createElement("div");
+            let newContent = document.createTextNode(result.innerText);
+            newElement.appendChild(newContent);
+            newElement.setAttribute("class","resultFinishedChild");
+            resultFinished.insertBefore(newElement, resultFinished.firstChild);
+
+            stopBtn.setAttribute("disabled", true);
+        }
+    </script>
+
 </body>
 
 </html>
-
-<script>
-    const info = document.getElementById("info");
-    const startBtn = document.getElementById("startBtn");
-    const stopBtn = document.getElementById("stopBtn");
-    const result = document.getElementById("result");
-
-    SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
-
-    if ('SpeechRecognition' in window) {
-        info.innerText = "ブラウザは音声合成に対応しています。";
-    } else {
-        info.innerText = "ブラウザは音声合成に対応していません。";
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'ja-JP';
-    recognition.interimResults = true;
-    recognition.continuous = true;
-
-    let finalTranscript = '';
-
-    recognition.onresult = (event) => {
-        let interimTranscript = '';
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-            let transcript = event.results[i][0].transcript;
-            if (event.results[i].isFinal) {
-                finalTranscript += transcript;
-            } else {
-                interimTranscript = transcript;
-            }
-        }
-        result.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';
-    }
-
-    startBtn.onclick = () => {
-        recognition.start();
-    }
-    stopBtn.onclick = () => {
-        recognition.stop();
-    }
-</script>
