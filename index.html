@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <dev id="info" class="info">ブラウザが音声合成に対応しているか確認中...</dev>
+    <dev id="info" class="info">ブラウザが音声認識に対応しているか確認中...</dev>
 
     <p></p>
     <div class="centering">
@@ -38,10 +38,10 @@
         SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
 
         if ("SpeechRecognition" in window) {
-            info.innerText = "ブラウザは音声合成に対応しています。";
+            info.innerText = "ブラウザは音声認識に対応しています。";
             startBtn.removeAttribute("disabled");
         } else {
-            info.innerText = "ブラウザは音声合成に対応していません。";
+            info.innerText = "ブラウザは音声認識に対応していません。";
         }
 
         const recognition = new SpeechRecognition();
@@ -78,6 +78,9 @@
             newElement.appendChild(newContent);
             newElement.setAttribute("class","resultFinishedChild");
             resultFinished.insertBefore(newElement, resultFinished.firstChild);
+
+            finalTranscript = "";
+            result.innerHTML = "";
 
             stopBtn.setAttribute("disabled", true);
         }
