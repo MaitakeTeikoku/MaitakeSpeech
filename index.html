@@ -97,7 +97,7 @@
         recognition.onsoundstart = () => {
             onsoundstartSignal.style.backgroundColor = "forestgreen";
         }
-        recognition.onsoundend = (event) => {
+        recognition.onsoundend = () => {
             onsoundstartSignal.style.backgroundColor = "crimson";;
         }
         recognition.onspeechstart = () => {
