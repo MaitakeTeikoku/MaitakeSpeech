@@ -11,11 +11,26 @@
 
 <body>
     <dev id="info" class="info">ブラウザが音声認識に対応しているか確認中...</dev>
-
-    <p></p>
     <div class="centering">
-        <button id="startBtn" class="startBtn" type="submit" disabled>スタート</button>
-        <button id="stopBtn" clss="stopBtn" type="button" disabled>ストップ</button>
+        <div class="btnParent">
+            <button id="startBtn" class="startBtn" type="submit" disabled>開始</button>
+            <button id="stopBtn" clss="stopBtn" type="button" disabled>停止</button>
+        </div>
+
+        <div class="signalParent">
+            <div class="signal">
+                <div id="onstartSignal" class="onstartSignal">源</div>
+            </div>
+            <div class="signal">
+                <div id="onaudiostartSignal" class="onaudiostartSignal">録</div>
+            </div>
+            <div class="signal">
+                <div id="onsoundstartSignal" class="onsoundstartSignal">音</div>
+            </div>
+            <div class="signal">
+                <div id="onspeechstartSignal" class="onspeechstartSignal">話</div>
+            </div>
+        </div>
     </div>
 
     <div class="centering">
@@ -30,8 +45,15 @@
 
     <script>
         const info = document.getElementById("info");
+
         const startBtn = document.getElementById("startBtn");
         const stopBtn = document.getElementById("stopBtn");
+
+        const onstartSignal = document.getElementById("onstartSignal");
+        const onaudiostartSignal = document.getElementById("onaudiostartSignal");
+        const onsoundstartSignal = document.getElementById("onsoundstartSignal");
+        const onspeechstartSignal = document.getElementById("onspeechstartSignal");
+
         const result = document.getElementById("result");
         const resultFinished = document.getElementById("resultFinished");
 
@@ -64,26 +86,58 @@
             result.innerHTML = "<span class='finalTranscript'>" + finalTranscript + "</span><span class='interimTranscript'>" + interimTranscript + "</span>";
         }
 
+        recognition.onerror = (event) => {
+            info.innerText = event.error;
+        }
+
+        recognition.onstart = () => {
+            onstartSignal.style.backgroundColor = "forestgreen";
+        }
+        recognition.onend = () => {
+            onstartSignal.style.backgroundColor = "crimson";
+        }
+
+        recognition.onaudiostart = () => {
+            onaudiostartSignal.style.backgroundColor = "forestgreen";
+        }
+        recognition.onaudioend = () => {
+            onaudiostartSignal.style.backgroundColor = "crimson";
+        }
+
+        recognition.onsoundstart = () => {
+            onsoundstartSignal.style.backgroundColor = "forestgreen";
+        }
+        recognition.onsoundend = (event) => {
+            onsoundstartSignal.style.backgroundColor = "crimson";;
+        }
+
+        recognition.onspeechstart = () => {
+            onspeechstartSignal.style.backgroundColor = "forestgreen";
+        }
+        recognition.onspeechend = () => {
+            onspeechstartSignal.style.backgroundColor = "crimson";
+        }
+
         startBtn.onclick = () => {
+            startBtn.setAttribute("disabled", true);
             recognition.start();
             stopBtn.removeAttribute("disabled");
-            startBtn.setAttribute("disabled", true);
         }
         stopBtn.onclick = () => {
+            stopBtn.setAttribute("disabled", true);
             recognition.stop();
-            startBtn.removeAttribute("disabled");
 
             let newElement = document.createElement("div");
             let newContent = document.createTextNode(result.innerText);
             newElement.appendChild(newContent);
-            newElement.setAttribute("class","resultFinishedChild");
+            newElement.setAttribute("class", "resultFinishedChild");
             resultFinished.insertBefore(newElement, resultFinished.firstChild);
 
             finalTranscript = "";
             interimTranscript = "";
             result.innerHTML = "";
 
-            stopBtn.setAttribute("disabled", true);
+            startBtn.removeAttribute("disabled");
         }
     </script>
 

@@ -14,15 +14,40 @@ button:not(:disabled) {
     margin: 0.5em;
 }
 
-.result, .resultFinishedChild {
+.btnParent {
+    margin: auto;
+}
+
+.signalParent {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+.signal {
+    font-size: 3vw;
+    text-align: center;
+    line-height: 5vw;
+    margin-right: 1vw;
+}
+.onstartSignal, .onaudiostartSignal, .onsoundstartSignal, .onspeechstartSignal {
+    width: 5vw;
+    height: 5vw;
+    border-radius: 50%;
+    background-color: crimson;
+}
+
+.result,
+.resultFinishedChild {
     color: #222222;
     border: 1px solid #888888;
     width: 90vw;
 }
+
 .result {
     background-color: #eeeeee;
     min-height: 5em;
 }
+
 .resultFinishedChild {
     background-color: #bbbbbb;
     min-height: 1em;
@@ -32,6 +57,7 @@ button:not(:disabled) {
 .finalTranscript {
     color: #222222;
 }
+
 .interimTranscript {
     color: #888888;
 }
