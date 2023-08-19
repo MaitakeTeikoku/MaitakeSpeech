@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Maitake Speech (Synthesis)</title>
+</head>
+
+<body>
+    <dev id="info" class="info"></dev>
+    <a class="link" href="./index.html">音声認識</a>
+
+    <div class="centering">
+        <div class="btnParent">
+            <button id="startBtn" class="startBtn" type="submit" disabled>開始</button>
+            <button id="stopBtn" clss="stopBtn" type="button" disabled>停止</button>
+        </div>
+    </div>
+    <div class="centering">
+        <div>
+            <textarea id="inputText" class="inputText"></textarea>
+        </div>
+    </div>
+
+    <script>
+        const info = document.getElementById("info");
+
+        const startBtn = document.getElementById("startBtn");
+        const stopBtn = document.getElementById("stopBtn");
+
+        startBtn.onclick = () => {
+            let inputText = document.getElementById("inputText").value;
+            if (inputText == "") {
+                info.innerText = "文字を入力してください。";
+            } else {
+                startSynthesis(inputText);
+            }
+        }
+        stopBtn.onclick = () => {
+            stopSynthesis();
+        }
+
+
+
+        function startSynthesis(text) {
+            startBtn.setAttribute("disabled", true);
+
+            const synthesis = new SpeechSynthesisUtterance();
+            synthesis.text = text;
+            synthesis.lang = 'ja-JP';
+            synthesis.pitch = 1;
+            synthesis.rate = 1;
+            synthesis.volume = 1;
+
+            synthesis.onend = () => {
+                stopSynthesis();
+            };
+
+            speechSynthesis.speak(synthesis);
+
+            stopBtn.removeAttribute("disabled");
+        }
+
+        function stopSynthesis() {
+            stopBtn.setAttribute("disabled", true);
+            speechSynthesis.cancel();
+
+            startBtn.removeAttribute("disabled");
+        }
+
+
+        startBtn.removeAttribute("disabled");
+    </script>
+
+</body>
+
+</html>
