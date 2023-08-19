@@ -8,6 +8,13 @@ button:not(:disabled) {
     cursor: pointer;
 }
 
+textarea {
+    background-color: #eeeeee;
+    color: #222222;
+    border: 1px solid #888888;
+    resize: vertical;
+}
+
 .centering {
     display: flex;
     justify-content: space-around;
@@ -42,8 +49,7 @@ button:not(:disabled) {
 }
 
 .result,
-.resultFinishedChild,
-.inputText {
+.resultFinishedChild {
     color: #222222;
     border: 1px solid #888888;
     width: 90vw;
@@ -69,6 +75,6 @@ button:not(:disabled) {
 }
 
 .inputText {
-    background-color: #eeeeee;
+    width: 90vw;
     min-height: 75vh;
 }
