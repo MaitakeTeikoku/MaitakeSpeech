@@ -18,23 +18,15 @@
         </div>
 
         <div class="signalParent">
-            <div class="signal">
-                <div id="onstartSignal" class="onstartSignal">源</div>
-            </div>
-            <div class="signal">
-                <div id="onaudiostartSignal" class="onaudiostartSignal">録</div>
-            </div>
-            <div class="signal">
-                <div id="onsoundstartSignal" class="onsoundstartSignal">音</div>
-            </div>
-            <div class="signal">
-                <div id="onspeechstartSignal" class="onspeechstartSignal">話</div>
-            </div>
+            <div id="onstartSignal" class="onstartSignal">源</div>
+            <div id="onaudiostartSignal" class="onaudiostartSignal">録</div>
+            <div id="onsoundstartSignal" class="onsoundstartSignal">音</div>
+            <div id="onspeechstartSignal" class="onspeechstartSignal">話</div>
         </div>
     </div>
 
     <div class="centering">
-        <div id="result" class="result"></div>
+        <div id="result" class="result">aaa</div>
     </div>
 
     <div class="centering">
@@ -72,9 +64,9 @@
         recognition.continuous = true;
 
         let finalTranscript = "";
-
+        let interimTranscript = "";
         recognition.onresult = (event) => {
-            let interimTranscript = "";
+            interimTranscript = "";
             for (let i = event.resultIndex; i < event.results.length; i++) {
                 let transcript = event.results[i][0].transcript;
                 if (event.results[i].isFinal) {
@@ -96,21 +88,18 @@
         recognition.onend = () => {
             onstartSignal.style.backgroundColor = "crimson";
         }
-
         recognition.onaudiostart = () => {
             onaudiostartSignal.style.backgroundColor = "forestgreen";
         }
         recognition.onaudioend = () => {
             onaudiostartSignal.style.backgroundColor = "crimson";
         }
-
         recognition.onsoundstart = () => {
             onsoundstartSignal.style.backgroundColor = "forestgreen";
         }
         recognition.onsoundend = (event) => {
             onsoundstartSignal.style.backgroundColor = "crimson";;
         }
-
         recognition.onspeechstart = () => {
             onspeechstartSignal.style.backgroundColor = "forestgreen";
         }

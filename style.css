@@ -22,18 +22,18 @@ button:not(:disabled) {
     display: flex;
     justify-content: center;
     margin: auto;
+    font-size: 5vw;
+
 }
-.signal {
-    font-size: 3vw;
-    text-align: center;
-    line-height: 5vw;
-    margin-right: 1vw;
-}
-.onstartSignal, .onaudiostartSignal, .onsoundstartSignal, .onspeechstartSignal {
-    width: 5vw;
-    height: 5vw;
+
+.onstartSignal,
+.onaudiostartSignal,
+.onsoundstartSignal,
+.onspeechstartSignal {
     border-radius: 50%;
     background-color: crimson;
+    padding: 1vw;
+    margin-right: 1vw;
 }
 
 .result,
