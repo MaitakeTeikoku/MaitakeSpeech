@@ -98,10 +98,11 @@
             onsoundstartSignal.style.backgroundColor = "forestgreen";
         }
         recognition.onsoundend = () => {
-            //onsoundstartSignal.style.backgroundColor = "crimson";
+            onsoundstartSignal.style.backgroundColor = "crimson";
         }
         recognition.onspeechstart = () => {
             onspeechstartSignal.style.backgroundColor = "forestgreen";
+            onsoundstartSignal.style.backgroundColor = "forestgreen";
         }
         recognition.onspeechend = () => {
             onspeechstartSignal.style.backgroundColor = "crimson";
@@ -116,11 +117,13 @@
             stopBtn.setAttribute("disabled", true);
             recognition.stop();
 
-            let newElement = document.createElement("div");
-            let newContent = document.createTextNode(result.innerText);
-            newElement.appendChild(newContent);
-            newElement.setAttribute("class", "resultFinishedChild");
-            resultFinished.insertBefore(newElement, resultFinished.firstChild);
+            if (result.innerText != "") {
+                let newElement = document.createElement("div");
+                let newContent = document.createTextNode(result.innerText);
+                newElement.appendChild(newContent);
+                newElement.setAttribute("class", "resultFinishedChild");
+                resultFinished.insertBefore(newElement, resultFinished.firstChild);
+            }
 
             finalTranscript = "";
             interimTranscript = "";
