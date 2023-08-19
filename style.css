@@ -4,6 +4,10 @@ body {
     font-family: 'BIZ UDGothic', sans-serif;
 }
 
+input[type="text"] {
+    font-size: 16px;
+}
+
 button:not(:disabled) {
     cursor: pointer;
 }
